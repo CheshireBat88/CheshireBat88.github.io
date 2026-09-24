@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Личная страница-резюме">
+  <title>CheshireBat</title>
+  <style>
+    :root {
+      --bg: #0d0e1a;
+      --bg-soft: #131527;
+      --card: #171a2e;
+      --border: #262a45;
+      --text: #e7e9f5;
+      --muted: #a2a7c4;
+      --accent: #7c5cff;
+      --accent-2: #4a6cf7;
+      --grad: linear-gradient(135deg, #7c5cff, #4a6cf7);
+      --radius: 14px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background:
+        radial-gradient(900px 500px at 85% -10%, rgba(124, 92, 255, .18), transparent 60%),
+        radial-gradient(700px 400px at -10% 30%, rgba(74, 108, 247, .14), transparent 60%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { max-width: 1000px; margin: 0 auto; padding: 0 24px; }
+
+    /* Header */
+    header {
+      position: sticky; top: 0; z-index: 10;
+      backdrop-filter: blur(10px);
+      background: rgba(13, 14, 26, .75);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 0; gap: 16px;
+    }
+    .logo {
+      font-weight: 700; font-size: 18px; letter-spacing: .03em;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      white-space: nowrap;
+    }
+    .nav-links { display: flex; align-items: center; gap: 20px; list-style: none; }
+    .nav-links a { color: var(--muted); font-size: 15px; }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+    .lang-btn {
+      font-size: 14px; font-weight: 600; cursor: pointer;
+      color: var(--text);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 16px;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .lang-btn:hover { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(124, 92, 255, .15); }
+
+    /* Hero */
+    .hero {
+      display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px;
+      align-items: center;
+      padding: 90px 0 70px;
+    }
+    .hero-greeting { color: var(--accent); font-weight: 600; font-size: 15px; text-transform: uppercase; letter-spacing: .12em; }
+    .hero h1 { font-size: 46px; line-height: 1.1; margin: 10px 0 6px; letter-spacing: -.01em; }
+    .hero .tagline { color: var(--muted); font-size: 19px; max-width: 480px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .btn {
+      display: inline-block; padding: 11px 22px; border-radius: 999px;
+      font-size: 15px; font-weight: 600;
+      transition: transform .15s, box-shadow .2s;
+    }
+    .btn:hover { text-decoration: none; transform: translateY(-1px); }
+    .btn-primary { background: var(--grad); color: #fff; box-shadow: 0 6px 20px rgba(124, 92, 255, .35); }
+    .btn-ghost { border: 1px solid var(--border); color: var(--text); }
+    .btn-ghost:hover { border-color: var(--accent); }
+    .avatar {
+      width: 220px; height: 220px; margin: 0 auto; display: block;
+      border-radius: 50%;
+      background: var(--grad);
+      color: #fff;
+      font-size: 64px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 60px rgba(124, 92, 255, .35), inset 0 -18px 40px rgba(0, 0, 0, .35);
+      user-select: none;
+    }
+
+    /* Sections */
+    section { padding: 56px 0; }
+    .section-title {
+      font-size: 28px; margin-bottom: 6px; letter-spacing: -.01em;
+    }
+    .section-sub { color: var(--muted); margin-bottom: 30px; max-width: 640px; }
+    .section-title::after {
+      content: ""; display: block;
+      width: 60px; height: 4px; margin-top: 10px; border-radius: 2px;
+      background: var(--grad);
+    }
+
+    /* About */
+    .about-text p { margin-bottom: 14px; color: var(--text); }
+
+    /* Skills */
+    .skills-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      transition: border-color .2s, transform .2s;
+    }
+    .card:hover { border-color: var(--accent); transform: translateY(-3px); }
+    .card h3 { font-size: 16px; margin-bottom: 8px; }
+    .card p { color: var(--muted); font-size: 14px; }
+    .card-icon {
+      width: 42px; height: 42px; border-radius: 12px;
+      background: var(--grad);
+      margin-bottom: 14px;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* Experience */
+    .timeline { list-style: none; display: flex; flex-direction: column; gap: 20px; }
+    .timeline li {
+      position: relative; padding-left: 26px;
+      border-left: 2px solid var(--border);
+      margin-left: 8px;
+    }
+    .timeline li::before {
+      content: ""; position: absolute;
+      left: -8px; top: 6px;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--grad);
+      box-shadow: 0 0 12px rgba(124, 92, 255, .5);
+    }
+    .timeline h3 { font-size: 17px; }
+    .timeline .period { color: var(--accent); font-size: 13px; font-weight: 600; }
+    .timeline p { color: var(--muted); font-size: 14px; margin-top: 4px; }
+
+    /* Contact */
+    .contact-list { display: flex; flex-direction: column; gap: 12px; max-width: 560px; }
+    .contact-row {
+      display: flex; align-items: center; gap: 14px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      transition: border-color .2s, transform .15s;
+    }
+    .contact-row:hover { border-color: var(--accent); transform: translateX(4px); }
+    .contact-row .label { color: var(--muted); font-size: 13px; text-transform: uppercase; letter-spacing: .08em; min-width: 90px; }
+    .contact-row .value { color: var(--text); font-weight: 500; word-break: break-all; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 26px 0 40px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    footer .container { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+
+    @media (max-width: 720px) {
+      .hero { grid-template-columns: 1fr; text-align: center; padding: 60px 0 40px; }
+      .hero .tagline { margin: 0 auto; }
+      .hero-actions { justify-content: center; }
+      .hero h1 { font-size: 36px; }
+      .avatar { width: 160px; height: 160px; font-size: 46px; order: -1; }
+      .section-title::after { margin-left: auto; margin-right: auto; }
+      section { text-align: center; }
+      .section-sub { margin-left: auto; margin-right: auto; }
+      .about-text p { text-align: left; }
+      .timeline li { text-align: left; }
+      .contact-row { text-align: left; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a class="logo" href="#">CheshireBat</a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#about" data-i18n="nav.about">Обо мне</a></li>
+          <li><a href="#skills" data-i18n="nav.skills">Навыки</a></li>
+          <li><a href="#experience" data-i18n="nav.experience">Опыт</a></li>
+          <li><a href="#contacts" data-i18n="nav.contacts">Контакты</a></li>
+        </ul>
+      </nav>
+      <button class="lang-btn" id="lang-btn" type="button" aria-label="Switch language">EN</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div>
+        <p class="hero-greeting" data-i18n="hero.greeting">Привет, я</p>
+        <h1 data-i18n="hero.name">CheshireBat</h1>
+        <p class="tagline" data-i18n="hero.tagline">Здесь будет короткое описание: кем вы работаете и чем увлекаетесь.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#about" data-i18n="hero.cta1">Обо мне</a>
+          <a class="btn btn-ghost" href="#contacts" data-i18n="hero.cta2">Связаться</a>
+        </div>
+      </div>
+      <div class="avatar" aria-hidden="true">CB</div>
+    </section>
+
+    <section id="about">
+      <h2 class="section-title" data-i18n="about.title">Обо мне</h2>
+      <p class="section-sub" data-i18n="about.sub">Пара строк, что даёт понять, кто вы.</p>
+      <div class="about-text">
+        <p data-i18n="about.p1">Заглушка: расскажите о том, как вы пришли в своё дело, что вам в нём нравится.</p>
+        <p data-i18n="about.p2">Заглушка: пара личных деталей — хобби, интересы, принципы работы.</p>
+      </div>
+    </section>
+
+    <section id="skills">
+      <h2 class="section-title" data-i18n="skills.title">Чем я занимаюсь</h2>
+      <p class="section-sub" data-i18n="skills.sub">Основные направления и инструменты.</p>
+      <div class="skills-grid">
+        <div class="card">
+          <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+          <h3 data-i18n="skill1.title">Направление 1</h3>
+          <p data-i18n="skill1.desc">Заглушка: опишите навык и где вы его применяете.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <h3 data-i18n="skill2.title">Направление 2</h3>
+          <p data-i18n="skill2.desc">Заглушка: опишите навык и где вы его применяете.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+          <h3 data-i18n="skill3.title">Направление 3</h3>
+          <p data-i18n="skill3.desc">Заглушка: опишите навык и где вы его применяете.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/></svg></div>
+          <h3 data-i18n="skill4.title">Направление 4</h3>
+          <p data-i18n="skill4.desc">Заглушка: опишите навык и где вы его применяете.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.5 0 4 1.5 4 3.5S16 10 14 10c-3 0-3-2.5-3-4V5"/></svg></div>
+          <h3 data-i18n="skill5.title">Направление 5</h3>
+          <p data-i18n="skill5.desc">Заглушка: опишите навык и где вы его применяете.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 1 0 8 8z"/><path d="M6 9c4 0 12 2 12 6"/></svg></div>
+          <h3 data-i18n="skill6.title">Направление 6</h3>
+          <p data-i18n="skill6.desc">Заглушка: опишите навык и где вы его применяете.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <h2 class="section-title" data-i18n="experience.title">Опыт</h2>
+      <p class="section-sub" data-i18n="experience.sub">Места работы или заметные проекты.</p>
+      <ul class="timeline">
+        <li>
+          <p class="period" data-i18n="experience.period1">2020 — 2023 · Проект / Компания</p>
+          <h3 data-i18n="experience.role1">Должность или роль</h3>
+          <p data-i18n="experience.desc1">Заглушка: что делали и чего достигли.</p>
+        </li>
+        <li>
+          <p class="period" data-i18n="experience.period2">2017 — 2020 · Проект / Компания</p>
+          <h3 data-i18n="experience.role2">Должность или роль</h3>
+          <p data-i18n="experience.desc2">Заглушка: что делали и чего достигли.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section id="contacts">
+      <h2 class="section-title" data-i18n="contacts.title">Контакты</h2>
+      <p class="section-sub" data-i18n="contacts.sub">Всегда рад новым знакомствам: напишите, если захотите пообщаться или поработать вместе.</p>
+      <div class="contact-list">
+        <a class="contact-row" href="mailto:ch3shirsky@gmail.com">
+          <span class="label" data-i18n="contacts.email">Email</span>
+          <span class="value">ch3shirsky@gmail.com</span>
+        </a>
+        <a class="contact-row" href="https://github.com/CheshireBat88" target="_blank" rel="noopener">
+          <span class="label" data-i18n="contacts.github">GitHub</span>
+          <span class="value">github.com/CheshireBat88</span>
+        </a>
+        <a class="contact-row" href="#contacts">
+          <span class="label" data-i18n="contacts.telegram">Telegram</span>
+          <span class="value" data-i18n="contacts.telegramHint">@username</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <span>© 2026 CheshireBat</span>
+      <span data-i18n="footer.made">Сделано вручную, без сборщиков</span>
+    </div>
+  </footer>
+
+  <script>
+    var i18n = {
+      ru: {
+        "nav.about": "Обо мне",
+        "nav.skills": "Навыки",
+        "nav.experience": "Опыт",
+        "nav.contacts": "Контакты",
+        "hero.greeting": "Привет, я",
+        "hero.name": "CheshireBat",
+        "hero.tagline": "Здесь будет короткое описание: кем вы работаете и чем увлекаетесь.",
+        "hero.cta1": "Обо мне",
+        "hero.cta2": "Связаться",
+        "about.title": "Обо мне",
+        "about.sub": "Пара строк, что даёт понять, кто вы.",
+        "about.p1": "Заглушка: расскажите о том, как вы пришли в своё дело, что вам в нём нравится.",
+        "about.p2": "Заглушка: пара личных деталей — хобби, интересы, принципы работы.",
+        "skills.title": "Чем я занимаюсь",
+        "skills.sub": "Основные направления и инструменты.",
+        "skill1.title": "Направление 1",
+        "skill1.desc": "Заглушка: опишите навык и где вы его применяете.",
+        "skill2.title": "Направление 2",
+        "skill2.desc": "Заглушка: опишите навык и где вы его применяете.",
+        "skill3.title": "Направление 3",
+        "skill3.desc": "Заглушка: опишите навык и где вы его применяете.",
+        "skill4.title": "Направление 4",
+        "skill4.desc": "Заглушка: опишите навык и где вы его применяете.",
+        "skill5.title": "Направление 5",
+        "skill5.desc": "Заглушка: опишите навык и где вы его применяете.",
+        "skill6.title": "Направление 6",
+        "skill6.desc": "Заглушка: опишите навык и где вы его применяете.",
+        "experience.title": "Опыт",
+        "experience.sub": "Места работы или заметные проекты.",
+        "experience.period1": "2020 — 2023 · Проект / Компания",
+        "experience.role1": "Должность или роль",
+        "experience.desc1": "Заглушка: что делали и чего достигли.",
+        "experience.period2": "2017 — 2020 · Проект / Компания",
+        "experience.role2": "Должность или роль",
+        "experience.desc2": "Заглушка: что делали и чего достигли.",
+        "contacts.title": "Контакты",
+        "contacts.sub": "Всегда рад новым знакомствам: напишите, если захотите пообщаться или поработать вместе.",
+        "contacts.email": "Email",
+        "contacts.github": "GitHub",
+        "contacts.telegram": "Telegram",
+        "contacts.telegramHint": "@username",
+        "footer.made": "Сделано вручную, без сборщиков"
+      },
+      en: {
+        "nav.about": "About",
+        "nav.skills": "Skills",
+        "nav.experience": "Experience",
+        "nav.contacts": "Contact",
+        "hero.greeting": "Hi, I'm",
+        "hero.name": "CheshireBat",
+        "hero.tagline": "A short description goes here: what you do and what you enjoy.",
+        "hero.cta1": "About me",
+        "hero.cta2": "Get in touch",
+        "about.title": "About me",
+        "about.sub": "A couple of lines that show who you are.",
+        "about.p1": "Placeholder: tell how you got into your field and what you like about it.",
+        "about.p2": "Placeholder: a few personal details — hobbies, interests, how you work.",
+        "skills.title": "What I do",
+        "skills.sub": "Main areas and tools.",
+        "skill1.title": "Area 1",
+        "skill1.desc": "Placeholder: describe the skill and where you use it.",
+        "skill2.title": "Area 2",
+        "skill2.desc": "Placeholder: describe the skill and where you use it.",
+        "skill3.title": "Area 3",
+        "skill3.desc": "Placeholder: describe the skill and where you use it.",
+        "skill4.title": "Area 4",
+        "skill4.desc": "Placeholder: describe the skill and where you use it.",
+        "skill5.title": "Area 5",
+        "skill5.desc": "Placeholder: describe the skill and where you use it.",
+        "skill6.title": "Area 6",
+        "skill6.desc": "Placeholder: describe the skill and where you use it.",
+        "experience.title": "Experience",
+        "experience.sub": "Places you've worked or notable projects.",
+        "experience.period1": "2020 — 2023 · Project / Company",
+        "experience.role1": "Role or position",
+        "experience.desc1": "Placeholder: what you did and achieved.",
+        "experience.period2": "2017 — 2020 · Project / Company",
+        "experience.role2": "Role or position",
+        "experience.desc2": "Placeholder: what you did and achieved.",
+        "contacts.title": "Contact",
+        "contacts.sub": "Always happy to meet new people: drop a line if you'd like to chat or work together.",
+        "contacts.email": "Email",
+        "contacts.github": "GitHub",
+        "contacts.telegram": "Telegram",
+        "contacts.telegramHint": "@username",
+        "footer.made": "Handcrafted, no build tools"
+      }
+    };
+
+    var langs = ["ru", "en"];
+    var btn = document.getElementById("lang-btn");
+    var current = "ru";
+
+    function applyLang(lang) {
+      current = lang;
+      document.documentElement.lang = lang;
+      var dict = i18n[lang];
+      var els = document.querySelectorAll("[data-i18n]");
+      for (var i = 0; i < els.length; i++) {
+        var key = els[i].getAttribute("data-i18n");
+        if (dict[key]) els[i].textContent = dict[key];
+      }
+      var next = langs[0] === lang ? langs[1] : langs[0];
+      btn.textContent = next.toUpperCase();
+      try { localStorage.setItem("lang", lang); } catch (e) {}
+    }
+
+    btn.addEventListener("click", function () {
+      applyLang(current === "ru" ? "en" : "ru");
+    });
+
+    (function init() {
+      var saved = null;
+      try { saved = localStorage.getItem("lang"); } catch (e) {}
+      if (saved && i18n[saved]) {
+        applyLang(saved);
+      } else {
+        applyLang((navigator.language || "").toLowerCase().indexOf("ru") === 0 ? "ru" : "en");
+      }
+    })();
+  </script>
+</body>
+</html>
